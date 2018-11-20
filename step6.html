@@ -1,0 +1,268 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,  user-scalable=no" >
+
+<title>方向表示を出すための練習用サンプル</title>
+
+<script type="text/javascript">
+	//2018.11.20 バスの進行方向を表示させるための練習スクリプト
+	//ダミーデータを入れてデバッグ可能。
+	//ネットからの読み込みは行わない
+
+	function loadData(){
+		console.log("start");
+
+		//var xmlHTTP = new XMLHttpRequest();
+		//xmlHTTP.onreadystatechange = checkReadyState;
+
+		//var url = "http://mkbtm.net/nagaoka-bus/kouyou-line-json4.php";//データを取りに行くファイルの変更。2017.12.01修正
+		//xmlHTTP.open("GET", url, false);
+		//xmlHTTP.send(null);
+
+
+		//読み込みが完了した時の処理
+	//	function checkReadyState(){
+			//正常読み込みの時には
+			//if (xmlHTTP.readyState == 4 && xmlHTTP.status == 200) {
+			console.log("checkReadyState");
+
+
+
+				//表示の初期化 visibility: hidden 矢印の表示をけす（up)
+				document.querySelector("#tutumimachi .up").style.visibility="hidden";
+				document.querySelector("#kouyou2 .up").style.visibility="hidden";
+				document.querySelector("#kouyoudanchi .up").style.visibility="hidden";
+				document.querySelector("#ogino .up").style.visibility="hidden";
+				document.querySelector("#shimoyanagi .up").style.visibility="hidden";
+				document.querySelector("#miyazeki .up").style.visibility="hidden";
+				document.querySelector("#nid .up").style.visibility="hidden";
+				document.querySelector("#hive .up").style.visibility="hidden";
+				document.querySelector("#nisseki .up").style.visibility="hidden";
+				document.querySelector("#centerplaza .up").style.visibility="hidden";
+				document.querySelector("#honsha .up").style.visibility="hidden";
+				document.querySelector("#ion .up").style.visibility="hidden";
+				document.querySelector("#ooteohashi .up").style.visibility="hidden";
+				document.querySelector("#uedamachi .up").style.visibility="hidden";
+				//矢印の表示を消す（down）
+				document.querySelector("#tutumimachi .down").style.visibility="hidden";
+				document.querySelector("#kouyou2 .down").style.visibility="hidden";
+				document.querySelector("#kouyoudanchi .down").style.visibility="hidden";
+				document.querySelector("#ogino .down").style.visibility="hidden";
+				document.querySelector("#shimoyanagi .down").style.visibility="hidden";
+				document.querySelector("#miyazeki .down").style.visibility="hidden";
+				document.querySelector("#nid .down").style.visibility="hidden";
+				document.querySelector("#hive .down").style.visibility="hidden";
+				document.querySelector("#nisseki .down").style.visibility="hidden";
+				document.querySelector("#centerplaza .down").style.visibility="hidden";
+				document.querySelector("#honsha .down").style.visibility="hidden";
+				document.querySelector("#ion .down").style.visibility="hidden";
+				document.querySelector("#ooteohashi .down").style.visibility="hidden";
+				document.querySelector("#uedamachi .down").style.visibility="hidden";
+				//色を黒へ
+				document.querySelector("#tutumimachi").style.color="black";
+				document.querySelector("#kouyou2").style.color="black";
+				document.querySelector("#kouyoudanchi").style.color="black";
+				document.querySelector("#ogino").style.color="black";
+				document.querySelector("#shimoyanagi").style.color="black";
+				document.querySelector("#miyazeki").style.color="black";
+				document.querySelector("#nid").style.color="black";
+				document.querySelector("#hive").style.color="black";
+				document.querySelector("#nisseki").style.color="black";
+				document.querySelector("#centerplaza").style.color="black";
+				document.querySelector("#honsha").style.color="black";
+				document.querySelector("#ion").style.color="black";
+				document.querySelector("#ooteohashi").style.color="black";
+				document.querySelector("#uedamachi").style.color="black";
+
+				//var jsondata = xmlHTTP.responseText;
+				//console.log(jsondata);
+
+				//var obj = eval("(" + jsondata + ")");
+
+				//console.log(obj);
+				//console.log(obj.bus.length)
+
+				//受け取ったデータの形式 2017.12.01　長岡バスiの仕様変更によりこちらも変更
+				//{"route": "長岡駅前→大手大橋・日赤病院→江陽団地→精神医療センター→長岡駅前",
+				// "destination": "長岡駅前行き",
+				// "busStop": " センタープラザ前",
+				// time": "通過11:03"},]}
+
+
+				var dummy_route=[2];
+				var dummy_destination=[2];
+				var dummy_busStop=[2];
+				var dummy_time=[2];
+
+				i = 0;
+				dummy_route[i] = "江陽環状線蔵王橋先回り";
+				dummy_destination[i] ="江陽環状線蔵王橋先回り";
+				dummy_busStop[i] = "長岡造形大学前";
+				dummy_time[i]="15:20";
+
+				var iMax = 1;
+
+				var outputHTML = "";
+				//for (var i = 0; i < obj.bus.length; i++) {
+				for (var i = 0; i < iMax; i++) {
+					//var route = obj.bus[i].route;
+					//var destination = obj.bus[i].destination;
+					//var busStop = obj.bus[i].busStop;
+					//var time = obj.bus[i].time;
+
+					var route = dummy_route[i];
+					var destination = dummy_destination[i];
+					var busStop = dummy_busStop[i];
+					var time = dummy_time[i];
+
+
+
+					console.log(route);
+					console.log(destination);
+					console.log(busStop);
+					console.log(time);
+
+					outputHTML+='<div class="bus"><p>' + route + "</p>";
+					outputHTML+="<p>" + destination + "</p>";
+					outputHTML+="<p>" + busStop + "</p></div>";
+					outputHTML+="<p>" + time + "</p></div>";
+
+					busStop = busStop.trim();//余計なスペースなどを削除しておく
+					//発車した停留所の色を変える
+					if(busStop == "堤町") document.querySelector("#tutumimachi").style.color="red";
+					if(busStop == "江陽２丁目") document.querySelector("#kouyou2").style.color="red";
+					if(busStop == "江陽団地") document.querySelector("#kouyoudanchi").style.color="red";
+					if(busStop == "おぎ野") document.querySelector("#ogino").style.color="red";
+					if(busStop == "下柳") document.querySelector("#shimoyanagi").style.color="red";
+					if(busStop == "宮関") document.querySelector("#miyazeki").style.color="red";
+					if(busStop == "長岡造形大学前") document.querySelector("#nid").style.color="red";
+					if(busStop == "ハイブ長岡") document.querySelector("#hive").style.color="red";
+					if(busStop == "日赤病院前") document.querySelector("#nisseki").style.color="red";
+					if(busStop == "センタープラザ前") document.querySelector("#centerplaza").style.color="red";
+					if(busStop == "本社営業所前") document.querySelector("#honsha").style.color="red";
+					if(busStop == "イオン長岡店前") document.querySelector("#ion").style.color="red";
+					if(busStop == "大手大橋東詰") document.querySelector("#ooteohashi").style.color="red";
+					if(busStop == "上田町") document.querySelector("#uedamachi").style.color="red";
+
+					//行先方向によって矢印の表示方向をかえる。　2017.12.01修正
+					//路線の種類は次の通り
+					//  長岡駅前→精神医療センター→江陽団地→日赤病院→大手大橋→長岡駅前
+					//  長岡駅前→大手大橋・日赤病院→江陽団地→精神医療センター→長岡駅前
+					//  長岡駅前→大手大橋・日赤病院→江陽団地→日赤病院・大手大橋→長岡駅前
+					//  法務局→長岡駅→江陽団地→長岡駅
+					//  法務局→長岡駅→江陽団地→長岡駅→法務局
+					//  堤町→江陽団地→大手大橋→長岡駅前
+					//  日赤病院→長岡駅前
+					//  造形大学→日赤病院・大手大橋→長岡駅前
+					//  長岡駅前→大手大橋・日赤病院→江陽団地
+
+					//矢印を表示する Downの方向　長岡駅に向かう方向　これが長岡駅に向かうバスの一覧
+					if ( (destination == "長岡駅前行き" && route == "長岡駅前→精神医療センター→江陽団地→日赤病院→大手大橋→長岡駅前")
+							||(destination == "長岡駅前行き" && route == "長岡駅前→大手大橋・日赤病院→江陽団地→日赤病院・大手大橋→長岡駅前")
+							||(destination == "長岡駅前行き" && route == "法務局→長岡駅→江陽団地→長岡駅")
+							||(destination == "法務局行き" && route == "法務局→長岡駅→江陽団地→長岡駅→法務局")
+							||(destination == "長岡駅前行き" && route == "堤町→江陽団地→大手大橋→長岡駅前")
+							||(destination == "長岡駅前行き" && route == "日赤病院→長岡駅前")
+							||(destination == "長岡駅前行き" && route == "造形大学→日赤病院・大手大橋→長岡駅前")
+							||(destination == "長岡駅前行き" && route == "法務局→長岡駅前・アオーレ長岡→江陽団地→長岡駅")
+							||(destination == "法務局行き" && route == "法務局→長岡駅前・アオーレ長岡→江陽団地→長岡駅→法務局")
+							)
+					{
+						if(busStop == "堤町") document.querySelector("#tutumimachi .down").style.visibility="visible";
+						if(busStop == "江陽２丁目") document.querySelector("#kouyou2 .down").style.visibility="visible";
+						if(busStop == "江陽団地") document.querySelector("#kouyoudanchi .down").style.visibility="visible";
+						if(busStop == "おぎ野") document.querySelector("#ogino .down").style.visibility="visible";
+						if(busStop == "下柳") document.querySelector("#shimoyanagi .down").style.visibility="visible";
+						if(busStop == "宮関") document.querySelector("#miyazeki .down").style.visibility="visible";
+						if(busStop == "長岡造形大学前") document.querySelector("#nid .down").style.visibility="visible";
+						if(busStop == "ハイブ長岡") document.querySelector("#hive .down").style.visibility="visible";
+						if(busStop == "日赤病院前") document.querySelector("#nisseki .down").style.visibility="visible";
+						if(busStop == "センタープラザ前") document.querySelector("#centerplaza .down").style.visibility="visible";
+						if(busStop == "本社営業所前") document.querySelector("#honsha .down").style.visibility="visible";
+						if(busStop == "イオン長岡店前") document.querySelector("#ion .down").style.visibility="visible";
+						if(busStop == "大手大橋東詰") document.querySelector("#ooteohashi .down").style.visibility="visible";
+						if(busStop == "上田町") document.querySelector("#uedamachi .down").style.visibility="visible";
+					}
+
+					//矢印を表示する UPの場合　江陽団地に向かう方向　これが紅葉団地方向に向かうバスの一覧
+					if ( (destination == "長岡駅前行き" && route == "長岡駅前→大手大橋・日赤病院→江陽団地→精神医療センター→長岡駅前")
+								||(destination == "江陽団地行き" && route == "長岡駅前→大手大橋・日赤病院→江陽団地→日赤病院・大手大橋→長岡駅前")
+								||(destination == "江陽団地行き" && route == "法務局→長岡駅→江陽団地→長岡駅")
+								||(destination == "江陽団地行き" && route == "法務局→長岡駅→江陽団地→長岡駅→法務局")
+								||(destination == "江陽団地行き" && route == "法務局→長岡駅前・アオーレ長岡→江陽団地→長岡駅前")
+								||(destination == "江陽団地行き" && route == "法務局→長岡駅前・アオーレ長岡→江陽団地→長岡駅→法務局")
+								)
+						{
+						if(busStop == "堤町") document.querySelector("#tutumimachi .up").style.visibility="visible";
+						if(busStop == "江陽２丁目") document.querySelector("#kouyou2 .up").style.visibility="visible";
+						if(busStop == "江陽団地") document.querySelector("#kouyoudanchi .up").style.visibility="visible";
+						if(busStop == "おぎ野") document.querySelector("#ogino .up").style.visibility="visible";
+						if(busStop == "下柳") document.querySelector("#shimoyanagi .up").style.visibility="visible";
+						if(busStop == "宮関") document.querySelector("#miyazeki .up").style.visibility="visible";
+						if(busStop == "長岡造形大学前") document.querySelector("#nid .up").style.visibility="visible";
+						if(busStop == "ハイブ長岡") document.querySelector("#hive .up").style.visibility="visible";
+						if(busStop == "日赤病院前") document.querySelector("#nisseki .up").style.visibility="visible";
+						if(busStop == "センタープラザ前") document.querySelector("#centerplaza .up").style.visibility="visible";
+						if(busStop == "本社営業所前") document.querySelector("#honsha .up").style.visibility="visible";
+						if(busStop == "イオン長岡店前") document.querySelector("#ion .up").style.visibility="visible";
+						if(busStop == "大手大橋東詰") document.querySelector("#ooteohashi .up").style.visibility="visible";
+						if(busStop == "上田町") document.querySelector("#uedamachi .up").style.visibility="visible";
+					}
+
+
+
+				  }
+				document.getElementById("output").innerHTML = outputHTML;
+		//	}
+		//}
+	}
+
+
+
+	//htmlの読み込みが完了したら 最初の一回
+	//window.onload = function() {
+	//	loadData();
+	//}
+	window.onload = function() {
+		loadData();
+	}
+
+//	setInterval(loadData,30*1000);//一定時間毎に実行
+
+</script>
+
+<style>
+
+	.busStop{
+		display: block;
+		width: 200px;
+	}
+
+</style>
+</head>
+
+<body>
+
+<div id="output">読み込み中</div>
+
+<table>
+	<tr id="tutumimachi"><td>堤町</td><td class="down">↓</td><td class="up">↑</td></tr>
+	<tr id="kouyou2"><td>江陽２丁目</td><td class="down">↓</td><td class="up">↑</td></tr>
+	<tr id="kouyoudanchi"><td>江陽団地</td><td class="down">↓</td><td class="up">↑</td></tr>
+	<tr id="ogino"><td>おぎ野</td><td class="down">↓</td><td class="up">↑</td></tr>
+	<tr id="shimoyanagi"><td>下柳</td><td class="down">↓</td><td class="up">↑</td></tr>
+	<tr id="miyazeki"><td>宮関</td><td class="down">↓</td><td class="up">↑</td></tr>
+	<tr id="nid"><td>長岡造形大学前</td><td class="down">↓</td><td class="up">↑</td></tr>
+	<tr id="hive"><td>ハイブ長岡</td><td class="down">↓</td><td class="up">↑</td></tr>
+	<tr id="nisseki"><td>日赤病院前</td><td class="down">↓</td><td class="up">↑</td></tr>
+	<tr id="centerplaza"><td>センタープラザ前</td><td class="down">↓</td><td class="up">↑</td></tr>
+	<tr id="honsha"><td>本社営業所前</td><td class="down">↓</td><td class="up">↑</td></tr>
+	<tr id="ion"><td>イオン長岡店前</td><td class="down">↓</td><td class="up">↑</td></tr>
+	<tr id="ooteohashi"><td>大手大橋東詰</td><td class="down">↓</td><td class="up">↑</td></tr>
+	<tr id="uedamachi"><td>上田町</td><td class="down">↓</td><td class="up">↑</td></tr>
+</table>
+
+</body>
+</html>
